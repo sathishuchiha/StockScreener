@@ -8,7 +8,11 @@ app = FastAPI()
 # Allow frontend access (important for mobile + hosting)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "https://stock-screener-frontend-phi.vercel.app",
+        "http://localhost",
+        "http://127.0.0.1"
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
