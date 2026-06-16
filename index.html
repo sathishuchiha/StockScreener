@@ -66,7 +66,9 @@ async function run() {
         .filter(s => s.length > 0)
         .slice(0, 20);
 
-    const res = await fetch("https://https://stockscreener-p8dy.onrender.com/bulk-analyze", {
+    const API = "https://stockscreener-p8dy.onrender.com";
+
+    const res = await fetch(`${API}/bulk-analyze`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
