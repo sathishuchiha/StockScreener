@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stock Valuation Engine</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #0f172a;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        textarea {
+            width: 95%;
+            height: 200px;
+            font-size: 16px;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        button {
+            width: 95%;
+            padding: 12px;
+            margin-top: 10px;
+            border-radius: 10px;
+            background: #38bdf8;
+            font-weight: bold;
+        }
+
+        pre {
+            text-align: left;
+            background: #1e293b;
+            padding: 15px;
+            border-radius: 10px;
+            white-space: pre-wrap;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>📊 Stock Valuation Engine</h2>
+
+<p>Enter up to 20 stocks (one per line)</p>
+
+<textarea id="input">RELIANCE
+TCS
+INFY
+HDFCBANK</textarea>
+
+<button onclick="run()">Analyze</button>
+
+<pre id="output"></pre>
+
+<script>
+
+async function run() {
+
+    const symbols = document.getElementById("input").value
+        .split("\n")
+        .map(s => s.trim())
+        .filter(s => s.length > 0)
+        .slice(0, 20);
+
+    const res = await fetch("https://YOUR_BACKEND_URL/bulk-analyze", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            symbols: symbols,
+            lookback_years: 5
+        })
+    });
+
+    const data = await res.json();
+
+    document.getElementById("output").innerText = data.markdown;
+}
+
+</script>
+
+</body>
+</html>
